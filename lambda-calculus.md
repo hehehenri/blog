@@ -41,7 +41,7 @@ But first, how do we handle more than one value at a time?
 // Multiple functions with only one argument
 (x => (y => add(x, y)))
 ```
-We can reduce this by hand to make things clear:
+We can [reduce](https://wiki.haskell.org/Beta_reduction) this by hand to make things clear:
 
 ```javascript
 ((x, y) => add(x, y))(1, 2)
@@ -119,7 +119,7 @@ Now that we have numbers, we should be able to operate over them.
 add: λm.λn.m succ n
 ```
 
-A good way to explain what's happenning on the `add` definition, is that we are 1 to `n` `m` times. We can partially reduce it, so it will make sense:
+At this point we are already composing functions. A good way to explain what's happenning on the `add` definition is that we are applying `succ` to `n` `m` times. Let's partially reduce it to make things clear:
 
 ```
 add: λm.λn.m succ n
@@ -132,7 +132,36 @@ add 2 1
     = ((λf.λx.f (f x)) succ) 1
     = (λx.succ (succ x)) 1
     = succ (succ 1)
+    = 3
 ```
 
-We applied `succ` at `1` two times.
+We applied `succ` at `1` two times, which evaluates to 3.
+
+```
+mult: λm.λn.m (add n) 0
+
+mult 2 3
+    = ((λm.λn.m (add n) 0) 2) 3
+    = (λn.2 (add n) 0) 3
+    = 2 (add 3) 0
+    = ((λf.λx.f (f x)) (add 3)) 0
+    = (λx.(add 3) ((add 3) x)) 0
+    = (add 3) (add 3) 0
+    = (add 3) 3
+    = 6
+```
+
+The multiplication function is as simple as apply addition to `m` `n` times, similarly to what we did on the `add` definition.
+
+On opposite to the successor function, we also have the predecessor function. We'll also need it to be able to subtract numbers. It's defined by the following formula:
+
+```
+pred: λn.λf.λx.n (λg.λh.h (g f)) (λu.x) (λu.u)
+
+sub: λm.λn.n pred m
+```
+
+I won't write the reduction for this case to keep things short, but again, we are just applying `pred` to `m` `n` times. You can take a look at `add` reduction if you are confused.
+
+
 
