@@ -31,7 +31,7 @@ I would like to quote Thomas Garitty on ["Functions describe the world"](https:/
 
 How would we write a real program with only functions? What about branching and recursion? Well, you actually can do those things with just pure lambda calculus. 
 
-# Currying
+## Currying
 
 But first, how do we handle more than one value at a time?
 
@@ -57,7 +57,7 @@ add(1, 2)
 This is a method called currying, named after some random guy called Haskell Curry, which invented it. It allows us to break down a function that takes multiple arguments into a chain of 
 single-argument functions.
 
-# Binary Operations
+## Binary Operations
 
 Okay, but how do we make conditional operations, like ifs and elses? 
 Let's define our booleans first:
@@ -89,7 +89,7 @@ true true_case false_case
 λtrue_case.λfalse_case.true_case
 ``````
 
-# Church Numerals
+## Church Numerals
 
 This is already looking nice, but a crucial thing is missing to make lambda calculus usable. Being able to deal with numbers.
 The most popular way to represent natural numbers in lambda calculus are using the Church numberals enconding. In summary, to define the numeral N, we apply a given function N times to a given value. Here is a small list of definitions, from 0-3.
@@ -111,7 +111,7 @@ succ: λn.λf.λx.f (n f x)
 
 The `succ` function works by applying `f` to `x` one more time, returning the definition of the Church numeral that represents the successor of `n`. If you reached this point, you should be able to reduce it by hand and confirm this by yourself. It's fun, I promise.
 
-# Arithimetic Operations
+## Arithimetic Operations
 
 Now that we have numbers, we should be able to operate over them.
 
@@ -249,4 +249,8 @@ fact (Y fact) 3
 ```
 
 And that's how you achieve recursion in pure lambda calculus.
+
+## Final Thoughts
+
+In conclusion, Lambda calculus, a foundational concept in mathematics and computer science, provides a powerful framework for expressing computation solely through functions. Lambda calculus exemplifies the elegance and versatility of functional programming, showcasing its capability to solve complex computational problems with simplicity and elegance. Its theoretical underpinnings continue to influence modern programming paradigms, making it a timeless and fundamental concept in the realm of computation (Writing conclusions are a pain in the ass, so yeah, GPT gave me a little help).
 
