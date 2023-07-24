@@ -33,20 +33,20 @@ But first, how do we handle more than one value at a time?
 
 ```javascript
 // Only one function with multiple arguments
-(x, y) => x + y
+(x, y) => add(x, y)
 // Multiple functions with only one argument
-(x => (y => x + y))
+(x => (y => add(x, y)))
 ```
 We can reduce this by hand to make things clear:
 
 ```javascript
-((x, y) => x + y)(1, 2)
-(1, 2) => 1 + 2
+((x, y) => add(x, y))(1, 2)
+add(1, 2)
 3
 // Multiple functions with only one argument
-((x => (y => x + y)) 1) 2
-(y => 1 + y) 2
-1 + 2
+((x => (y => add(x, y))) 1) 2
+(y => add(1, y)) 2
+add(1, 2)
 3
 ```
 
@@ -61,8 +61,7 @@ True: λx.λy.x
 False: λx.λy.y
 ```
 
-Those abstractions are called Church booleans. They are high-order functions, which are functions that receive a function and return another function. 
-True and False are abstractions that receive two arguments, and if true, the first one are returned; if not, the last.
+Those are called Church booleans, abstractions that receive two arguments, and if True, the first one are returned; if False, the last.
 
 With church booleans in place, we can now simulate a branching behavior using Church booleans and lambda abstractions. Here's how you can define a conditional expression in lambda calculus:
 
@@ -70,7 +69,7 @@ With church booleans in place, we can now simulate a branching behavior using Ch
 λcondition.λdo_this.λdo_that.(condition do_this do_that)
 ```
 
-The condition represents one of our church booleans that will determine with of the branches will be executed. You will get it when we reduce it again.
+The condition represents one of our church booleans that will determine with of the branches will be returned. You will get it when we reduce it again.
 
 ```
 true = λx.λy.x
@@ -80,8 +79,7 @@ true = λx.λy.x
 (λdo_that.(true true_case do_that)) false_case
 true true_case false_case
 (λx.λy.x) true_case false_case
-(λtrue_case.λy.true_case)
-true_case
-``````
 
+λtrue_case.λfalse_case.true_case
+``````
 
