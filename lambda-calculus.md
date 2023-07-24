@@ -101,7 +101,7 @@ The most popular way to represent natural numbers in lambda calculus are using t
 3: λf.λx.f (f (f x))
 ```
 
-Lets use the definition of `3` for example. If you think about it, in most cases, the end result of `λf.λx.f (f x)` will not be the number three, unless the function we are providing are the `succ` (It's defined bellow) and the 0 numeral as the value. This is simply a way of doing something three times, which means that not the end result, but the function itself is the church numberal three.
+Lets use the definition of `3` for example. If you think about it, in most cases, the end result of `λf.λx.f (f (f x))` will not be the number three, unless the function we are providing are the `succ` (It's defined bellow) and the 0 numeral as the value. This is simply a way of doing something three times, which means that not the end result, but the function itself is the church numberal three.
 
 But how do we get the successor of a numeral?
 
