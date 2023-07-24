@@ -23,12 +23,13 @@ Skeleton
     - Show both the u-comb and the y-comb and explain what they do and how they work
 
 <!-- talk about by who, when and why it were created. -->
-I would like to start quoting Thomas Garitty on ("Functions describe the world")[https://www.youtube.com/watch?v=PAZTIAfaNr8]. This couldn't be more true when we talk about lambda calculus.
-Keeping it short, lambda calculus is a model of computation where the only thing you can do is define functions with one argument that returns something else. Even being that simple, lambda calculus
-is turing complete, which basically means that if you give it enough time and resources, it can solve any computational problem.
+Lambda calculus was developed in the 1930s by the mathematician Alonzo Church, none other than the teacher of Alan Turing, atheist and homosexual, father of the computer science. It was introduced as a way to explore the foundations of mathematics and computation.
 
-But how would you write a real program with only functions? What about branching and recursion? Well, you actually can do this things with just pure lambda calculus. 
-First, how do we handle more than one value at the time?
+I would like to quote Thomas Garitty on ["Functions describe the world"](https://www.youtube.com/watch?v=PAZTIAfaNr8). This couldn't be truer when we talk about lambda calculus. Keeping it short, lambda calculus is a model of computation where the only thing you can do is define functions with one argument that returns something else. Even though it's simple, lambda calculus is Turing complete, which basically means that if you give it enough time and resources, it can solve any computational problem.
+
+How would we write a real program with only functions? What about branching and recursion? Well, you actually can do those things with just pure lambda calculus. 
+
+But first, how do we handle more than one value at a time?
 
 ```javascript
 // Only one function with multiple arguments
@@ -53,15 +54,16 @@ We can reduce this by hand to make things clear:
 This is a method called currying, named after some random guy called Haskell Curry, which invented it. It allows us to break down a function that takes multiple arguments into a chain of 
 single-argument functions.
 
-Ok, but now how do we make conditional operations, like ifs and elses? Let's define our booleans first:
+Okay, but how do we make conditional operations, like ifs and elses? 
+Let's define our booleans first:
 
 ```
 True: λx.λy.x
 False: λx.λy.y
 ```
 
-Those abstractions are called Church booleans. They are high order functions, which are functions that receive a function and return another function. 
-True and False are abstractions that receive two arguments and if true, the first one are returned if not, the last.
+Those abstractions are called Church booleans. They are high-order functions, which are functions that receive a function and return another function. 
+True and False are abstractions that receive two arguments, and if true, the first one are returned; if not, the last.
 
 With church booleans in place, we can now simulate a branching behavior using Church booleans and lambda abstractions. Here's how you can define a conditional expression in lambda calculus:
 
@@ -69,7 +71,7 @@ With church booleans in place, we can now simulate a branching behavior using Ch
 λcondition.λdo_this.λdo_that.(condition do_this do_that)
 ```
 
-The condition represents one of our church booleans that will determine with of the branches will be executed. You will get it if we reduce it again.
+The condition represents one of our church booleans that will determine with of the branches will be executed. You will get it when we reduce it again.
 
 ```
 true = λx.λy.x
@@ -81,6 +83,6 @@ true true_case false_case
 (λx.λy.x) true_case false_case
 (λtrue_case.λy.true_case)
 true_case
-```
+``````
 
 
