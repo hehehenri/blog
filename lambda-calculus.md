@@ -87,7 +87,7 @@ true true_case false_case
 (λx.λy.x) true_case false_case
 
 λtrue_case.λfalse_case.true_case
-``````
+```
 
 ## Church Numerals
 
