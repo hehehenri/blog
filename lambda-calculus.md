@@ -116,13 +116,13 @@ The `succ` function works by applying `f` to `x` one more time, returning the de
 Now that we have numbers, we should be able to operate over them.
 
 ```
-add: λm.λ.n.m succ n
+add: λm.λn.m succ n
 ```
 
 A good way to explain what's happenning on the `add` definition, is that we are 1 to `n` `m` times. We can partially reduce it, so it will make sense:
 
 ```
-add: λm.λ.n.m succ n
+add: λm.λn.m succ n
 2: λf.λx.f (f x)
 
 add 2 1
