@@ -44,9 +44,8 @@ We can reduce this by hand to make things clear:
 (1, 2) => 1 + 2
 3
 // Multiple functions with only one argument
-((x => (y => x + y))1)2
-(1 => (y => 1 + y))2
-(2 => 1 + 2)
+((x => (y => x + y)) 1) 2
+(y => 1 + y) 2
 1 + 2
 3
 ```
