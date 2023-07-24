@@ -179,9 +179,9 @@ const fact = (n) => {
 }
 ```
 
-The fact that `fact` calls itself is what makes it interesting to us. That's recursion. You can try to think about it, but that's not a direct form of achieving recursion directly on lambda calculus. We'll need something called the Y combinator.
+The fact that `fact` calls itself, is what makes it interesting to us. That's recursion. You can try to think about it, but that's not a direct form of achieving recursion directly on lambda calculus. We'll need something called the Y combinator.
 
-I'm not talking about the Silicon Valley's Y Combinator, but the fixed-point one. The Y combinator takes a function as an argument and returns a fixed point of that function, which is the value where the function remains unchanged. In other words, it enables self-reference within a function.
+I'm not talking about the Silicon Valley's Y Combinator, but the fixed-point one. The Y combinator takes a function as an argument and returns a fixed-point of that function, which is the value where the function remains unchanged. In other words, it enables self-reference within a function.
 
 ```
 Y: λf.(λx.f (x x)) (λx.f (x x))
@@ -190,7 +190,7 @@ Y: λf.(λx.f (x x)) (λx.f (x x))
 Lets write the factorial function in the lambda calculus syntax, so we can see the Y in action:
 
 ```
-fact: λf.λn(
+fact: λf.λn.(
     if n == 0 then 
         1 
     else 
@@ -201,51 +201,47 @@ fact: λf.λn(
 
 But how would we call `fact`? We need to give something as an argument to `f`, right? 
 
-First, lets see `Y` in action, and why is it called a fixed-point:
+First, lets see a fixed-point in action:
 
 ```
-G = (λx.f (x x)) (λx.f (x x))
-  = f ((λx.f (x x)) (λx.f (x x)))
-  = f G
+Y g = (λf.(λx.f (x x)) (λx.f (x x))) g
+    = (λx.g (x x)) (λx.g (x x))
+    = g ((λx.g (x x)) (λx.g (x x)))
+    = g (Y g)
 ```
 
-As you can se, regardless of the value of the function `f`, the F value still the same. If you take the function `f` as an argument, you will end up with the definition of the Y combinator.
-
-
-```
-Y: λf.G = λf.(λx.f (x x)) (λx.f (x x))
-```
+That's why Y is called a fixed-point. Regardless of the value of the function `g`, Y stills the same.
 
 Well, given that, how does that fix the issue with the `f` parameter on the `fact` function? Lets plug both things togeter:
 
 ```
 (Y fact) 3
-(λf.G = λf.(λx.f (x x)) (λx.f (x x)) fact) 3
-((λx.fact (x x)) (λx.fact (x x))) 3
-fact ((λx.fact (x x)) (λx.fact (x x))) 3
-fact (Y fact) 3
+    = (λf.G = λf.(λx.f (x x)) (λx.f (x x)) fact) 3
+    = ((λx.fact (x x)) (λx.fact (x x))) 3
+    = fact ((λx.fact (x x)) (λx.fact (x x))) 3
+    = fact (Y fact) 3
 ```
 
 Wait, that was it? Yes, that's exactly what we needed as an argument to the `f` parameter on `fact`. A reference to itsef. We can keep reducing to see if it will really work (Don't run away, please! Read it slowly and I promise it will make sense):
 
 ```
 fact (Y fact) 3
-    = (λf.λn.(if n == 0 then 1 else (mult n (f (sub n 1))))) (Y fact) 3
-    = (if 3 == 0 then 1 else (mult 3 ((Y fact) (sub 3 1))))
+    = (λf.λn.(if (eq n 0) then 1 else (mult n (f (sub n 1))))) (Y fact) 3
+    = (if (eq 3 0) then 1 else (mult 3 ((Y fact) (sub 3 1))))
     = (mult 3 ((Y fact) (sub 3 1)))
     = mult 3 (Y fact) 2
     = mult 3 (fact (Y fact) 2)
-    = mult 3 (λf.λn.(if n == 0 then 1 else (mult n (f (sub n 1))))) (Y fact) 2
-    = mult 3 (if 2 == 0 then 1 else (mult 2 ((Y fact) (sub 2 1))))
+    = mult 3 (λf.λn.(if (eq n 0) then 1 else (mult n (f (sub n 1))))) (Y fact) 2
+    = mult 3 (if (eq 2 0) then 1 else (mult 2 ((Y fact) (sub 2 1))))
     = mult 3 (mult 2 ((Y fact) (sub 2 1))))
     = mult 3 (mult 2 ((Y fact) 1))
     = mult 3 (mult 2 (fact (Y fact) 1))
-    = mult 3 (mult 2 ((λf.λn.(if n == 0 then 1 else (mult n (f (sub n 1))))) (Y fact) 1))
-    = mult 3 (mult 2 ((if 1 == 0 then 1 else (mult 1 ((Y fact) (sub 1 1))))))
+    = mult 3 (mult 2 ((λf.λn.(if (eq n 0) then 1 else (mult n (f (sub n 1))))) (Y fact) 1))
+    = mult 3 (mult 2 ((if (eq 1 0) then 1 else (mult 1 ((Y fact) (sub 1 1))))))
     = mult 3 (mult 2 (mult 1 ((Y fact) 0)))
     = mult 3 (mult 2 (mult 1 (fact (Y fact) 0)))
-    = mult 3 (mult 2 (mult 1 ((λf.λn.(if n == 0 then 1 else (mult n (f (sub n 1))))) (Y fact) 0)))
-    = mult 3 (mult 2 (mult 1 ((if 0 == 0 then 1 else (mult n ((Y fact) (sub n 1)))))))
+    = mult 3 (mult 2 (mult 1 ((λf.λn.(if eq(n 0) then 1 else (mult n (f (sub n 1))))) (Y fact) 0)))
+    = mult 3 (mult 2 (mult 1 ((if (eq 0 0) then 1 else (mult n ((Y fact) (sub n 1)))))))
     = mult 3 (mult 2 (mult 1 1))))
     = mult 3 (mult 2 1)
     = mult 3 2
@@ -253,3 +249,4 @@ fact (Y fact) 3
 ```
 
 And that's how you achieve recursion in pure lambda calculus.
+
