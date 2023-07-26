@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Henri Borges</title>
+    <link>/tags/</link>
+    <description>Recent content in Tags on Henri Borges</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 24 Jul 2023 00:00:00 +0000</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>functionalprogramming</title>
+      <link>/tags/functionalprogramming/</link>
+      <pubDate>Mon, 24 Jul 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/functionalprogramming/</guid>
+      <description></description>
+      <content></content>
+    </item>
+    
+    <item>
+      <title>lambdacalculus</title>
+      <link>/tags/lambdacalculus/</link>
+      <pubDate>Mon, 24 Jul 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/lambdacalculus/</guid>
+      <description></description>
+      <content></content>
+    </item>
+    
+  </channel>
+</rss>
